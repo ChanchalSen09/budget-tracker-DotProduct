@@ -62,10 +62,10 @@ export default function Budgets() {
     const overall = comparison?.overall || {};
 
     return (
-        <div className="space-y-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div className="space-y-6 mx-auto px-3 sm:px-6 lg:px-8 py-6 max-w-7xl min-h-screen bg-gray-50 pb-20">
             {/* Header */}
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                <div>
+                <div className="text-center sm:text-left">
                     <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
                         Budgets
                     </h1>
@@ -77,13 +77,15 @@ export default function Budgets() {
                         })}
                     </p>
                 </div>
-                <Button
-                    onClick={() => setShowForm(true)}
-                    className="w-full sm:w-auto shadow-sm"
-                >
-                    <Plus className="h-4 w-4 mr-2" />
-                    Add Budget
-                </Button>
+                <div className="w-full sm:w-auto flex justify-center sm:justify-end">
+                    <Button
+                        onClick={() => setShowForm(true)}
+                        className="w-full sm:w-auto shadow-sm"
+                    >
+                        <Plus className="h-4 w-4 mr-2" />
+                        Add Budget
+                    </Button>
+                </div>
             </div>
 
             {/* Overall Summary */}
@@ -94,23 +96,23 @@ export default function Budgets() {
                     </CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 text-center sm:text-left">
                         <div>
                             <p className="text-sm text-gray-600 mb-1">Total Allocated</p>
-                            <p className="text-2xl font-bold text-blue-600">
+                            <p className="text-xl sm:text-2xl font-bold text-blue-600">
                                 ₹{overall.total_allocated?.toLocaleString("en-IN") || 0}
                             </p>
                         </div>
                         <div>
                             <p className="text-sm text-gray-600 mb-1">Total Spent</p>
-                            <p className="text-2xl font-bold text-red-600">
+                            <p className="text-xl sm:text-2xl font-bold text-red-600">
                                 ₹{overall.total_spent?.toLocaleString("en-IN") || 0}
                             </p>
                         </div>
                         <div>
                             <p className="text-sm text-gray-600 mb-1">Remaining</p>
                             <p
-                                className={`text-2xl font-bold ${overall.total_remaining >= 0
+                                className={`text-xl sm:text-2xl font-bold ${overall.total_remaining >= 0
                                     ? "text-green-600"
                                     : "text-red-600"
                                     }`}
@@ -147,7 +149,9 @@ export default function Budgets() {
                 </CardHeader>
                 <CardContent>
                     <div className="w-full overflow-x-auto">
-                        <BudgetComparisonChart data={budgets} />
+                        <div className="min-w-[320px] sm:min-w-0">
+                            <BudgetComparisonChart data={budgets} />
+                        </div>
                     </div>
                 </CardContent>
             </Card>
@@ -161,7 +165,7 @@ export default function Budgets() {
                 </CardHeader>
                 <CardContent>
                     {budgets.length === 0 ? (
-                        <div className="text-center py-12">
+                        <div className="text-center py-10">
                             <p className="text-gray-500 text-sm sm:text-base">
                                 No budgets set for this month
                             </p>
@@ -217,8 +221,7 @@ export default function Budgets() {
                                         </div>
                                         <Progress
                                             value={Math.min(budget.percentage_used, 100)}
-                                            className={`h-2 ${budget.status === "over" ? "bg-red-100" : ""
-                                                }`}
+                                            className="h-2"
                                         />
                                         <p className="text-xs text-gray-500 text-right">
                                             Remaining: ₹{budget.remaining.toLocaleString("en-IN")}
